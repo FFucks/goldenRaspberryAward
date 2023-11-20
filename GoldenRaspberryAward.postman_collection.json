@@ -1,0 +1,39 @@
+{
+	"info": {
+		"_postman_id": "9515cb5a-a6ff-4204-ac4b-4e190bcb9ce8",
+		"name": "GoldenRaspberryAward",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getMoviesList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "minMaxMovies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/minMaxMovies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"minMaxMovies"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
