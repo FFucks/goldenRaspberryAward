@@ -1,5 +1,5 @@
 const express = require('express');
-const { createDatabase, addDataFileStream, getAllMovies } = require('./db');
+const { createDatabase, addDataFileStream, getAllMovies, getWinnerMovies } = require('./db');
 
 const app = express();
 const port = 8000;
@@ -7,11 +7,16 @@ const port = 8000;
 const db = createDatabase();
 
 function findMinAndMaxIntervalsForProducers(movies) {
-    const producers = [...new Set(movies.map(movie => movie.producers))];
     const intervals = [];
+    const producers = [];
+
+    movies.forEach((movie => {
+      const individualProducers = movie.producers.split(/(?:\band\b|,)/).map(producer => producer.trim()).filter(producer => producer != '');
+      producers.push(...individualProducers);
+    }))
   
     producers.forEach(producer => {
-      const producerMovies = movies.filter(movie => movie.producers === producer && (movie.winner && movie.winner.toLowerCase() === 'yes'));
+      const producerMovies = movies.filter(movie => movie.producers.includes(producer));
   
       // Only calculate if there is enough wins
       if (producerMovies.length >= 2) {
@@ -48,7 +53,7 @@ const server = app.listen(port, () => {
 
 app.get('/minMaxMovies', (req, res) => {
 
-    getAllMovies(db, (err, rows) => {
+    getWinnerMovies(db, (err, rows) => {
         const allProducersIntervals = findMinAndMaxIntervalsForProducers(rows);
     
         const result = {

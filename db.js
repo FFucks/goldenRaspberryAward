@@ -37,10 +37,17 @@ function getAllMovies(db, callback) {
   });
 }
 
+function getWinnerMovies(db, callback) {
+  db.all("SELECT * FROM movies WHERE winner = 'yes'", (err, rows) => {
+    callback(err, rows);
+  });
+}
+
 module.exports = {
   createDatabase,
   addDataFileStream,
-  getAllMovies
+  getAllMovies,
+  getWinnerMovies
 };
 
 
